@@ -1,9 +1,18 @@
 import { useState } from 'react';
 import { useRegisterMutation } from 'redux/auth/auth-api';
-import Section from 'components/Section';
-import Container from 'components/Container/Container';
-import { FormStyled, LabelStyled, InputStyled } from './RegisterPage.style';
-import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
+import {
+  FormStyled,
+  LabelStyled,
+  InputStyled,
+  SectionStyled,
+  ContainerStyled,
+  TextStyled,
+  TitleStyled,
+  FlexStyled,
+  linkStyled,
+} from './RegisterPage.style';
+import Button from 'components/Button';
 
 export default function RegisterPage() {
   const [name, setName] = useState('');
@@ -40,14 +49,21 @@ export default function RegisterPage() {
   }
 
   return (
-    <Section>
-      <Container>
+    <SectionStyled>
+      <ContainerStyled>
+        <TextStyled
+          style={{ marginBottom: '16px', textTransform: 'uppercase' }}
+        >
+          Welcome to phonebook
+        </TextStyled>
+        <TitleStyled>Create new account</TitleStyled>
         <FormStyled onSubmit={handleSubmit}>
           <LabelStyled>
             Name
             <InputStyled
               type="text"
               name="name"
+              placeholder="user"
               value={name}
               onChange={handleChange}
               required
@@ -58,6 +74,7 @@ export default function RegisterPage() {
             <InputStyled
               type="email"
               name="email"
+              placeholder="user@exaple.com"
               value={email}
               onChange={handleChange}
               required
@@ -73,11 +90,17 @@ export default function RegisterPage() {
               required
             />
           </LabelStyled>
-          <Button type="submit" variant="contained">
-            Go
+          <Button type="submit" style={{ marginRight: 'auto' }}>
+            Create Account
           </Button>
         </FormStyled>
-      </Container>
-    </Section>
+        <FlexStyled>
+          <TextStyled style={{ fontWeight: '300' }}>Go back to</TextStyled>
+          <Link to="/login" style={{ ...linkStyled }}>
+            Login
+          </Link>
+        </FlexStyled>
+      </ContainerStyled>
+    </SectionStyled>
   );
 }

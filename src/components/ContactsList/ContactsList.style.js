@@ -1,9 +1,5 @@
-import s from 'styled-components';
+import styled from 'styled-components';
 
-const List = s.ul``;
+const ListStyled = styled.ul``;
 
-const ContactsListStyled = {
-  List,
-};
-
-export default ContactsListStyled;
+export { ListStyled };

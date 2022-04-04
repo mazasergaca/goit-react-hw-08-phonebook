@@ -1,11 +1,9 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import authSelectors from 'redux/auth/auth-selectors';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { useFetchCurrentUserMutation } from 'redux/auth/auth-api';
 import AppBar from './AppBar';
-import Navigation from './Navigation';
-import AuthNav from './AuthNav';
 import PrivateRoute from 'utils/PrivateRoute';
 import PublicRoute from 'utils/PublicRoute';
 
@@ -22,6 +20,8 @@ export const App = () => {
     authSelectors.getIsFetchingCurrentUser
   );
 
+  const location = useLocation();
+
   useEffect(() => {
     if (token) {
       fetchCurrentUser();
@@ -32,7 +32,9 @@ export const App = () => {
     <h1>SKELETON</h1>
   ) : (
     <>
-      <AppBar />
+      {location.pathname !== '/login' && location.pathname !== '/register' && (
+        <AppBar />
+      )}
 
       <Suspense fallback={<span>wait</span>}>
         <Routes>

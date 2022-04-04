@@ -7,11 +7,11 @@
 transition: background-color 250ms linear;
 }
 
-.login-link {
+.primary-link {
 margin-right: 25px;
 }
 
-.login-link:hover{
+.primary-link:hover{
  background-color: rgba(211, 211, 211, 0.3);
 }
 

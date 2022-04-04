@@ -6,7 +6,9 @@ body {
  
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 1800px;
+  /* height: 1800px; */
+  padding: 0 !important;
+  overflow: hidden;
 }
 
 code {
@@ -25,11 +27,16 @@ img {
   display: block;
 }
 
-h1, h2, p {
+h1, h2, p, ul {
   margin: 0;
   padding: 0;
 }
 
 * {
   box-sizing: border-box;
+}
+
+html {
+  overflow-y: scroll  !important;
+ 
 }

@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 
 const ButtonStyled = styled.button`
-  width: 100px;
   padding: 10px 20px;
-  margin-left: auto;
+
   font-family: Quicksand, sans-serif;
   font-size: 16px;
   font-weight: 300;

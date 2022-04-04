@@ -1,5 +1,4 @@
 import styled, { keyframes } from 'styled-components';
-import heroImage from 'image/hero.jpg';
 
 const animationHeroText = keyframes`
 0% {
@@ -14,16 +13,13 @@ const animationHeroText = keyframes`
 
 const SectionStyled = styled.div`
   width: 100%;
-  max-width: 1600px;
+  max-width: 2048px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 80px;
   height: 600px;
   border-top: 1px solid transparent;
   background-size: cover;
-  background-image: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.2),
-      rgba(47, 48, 58, 0.4)
-    ),
-    url(${heroImage});
 `;
 
 const ContainerStyled = styled.div`
@@ -36,6 +32,7 @@ const ContainerStyled = styled.div`
 
 const TextStyled = styled.p`
   font-size: 48px;
+  font-family: 'Russo One', sans-serif;
   font-weight: 300;
   text-align: center;
   color: #fff;

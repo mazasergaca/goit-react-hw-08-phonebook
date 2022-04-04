@@ -1,12 +1,16 @@
-import s from 'styled-components';
+import styled from 'styled-components';
 
-const Label = s.label``;
+const LabelStyled = styled.label`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: #fff;
+`;
 
-const Input = s.input``;
+const InputStyled = styled.input`
+  margin-left: 15px;
+`;
 
-const FilterStyled = {
-  Label,
-  Input,
-};
-
-export default FilterStyled;
+export { LabelStyled, InputStyled };

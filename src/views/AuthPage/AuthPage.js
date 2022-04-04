@@ -48,7 +48,9 @@ export default function AuthPage() {
   return (
     <SectionStyled>
       <ContainerStyled>
-        <TextStyled style={{ marginBottom: '16px' }}>
+        <TextStyled
+          style={{ marginBottom: '16px', textTransform: 'uppercase' }}
+        >
           Welcome to phonebook
         </TextStyled>
         <TitleStyled>Login to your account</TitleStyled>
@@ -72,11 +74,13 @@ export default function AuthPage() {
               onChange={handleChange}
             />
           </AuthLabelStyled>
-          <Button type="submit">Log In</Button>
+          <Button type="submit" style={{ marginLeft: 'auto' }}>
+            Log In
+          </Button>
         </AuthFormStyled>
         <FlexStyled>
           <TextStyled style={{ fontWeight: '300' }}>No Account?</TextStyled>
-          <Link to="register" style={{ ...linkStyled }}>
+          <Link to="/register" style={{ ...linkStyled }}>
             Register Here
           </Link>
         </FlexStyled>

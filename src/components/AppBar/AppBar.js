@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import authSelectors from 'redux/auth/auth-selectors';
 import { BsTelephone } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import AuthNav from 'components/AuthNav';
+import MenuNavigation from 'components/MenuNavigation';
 import {
   HeaderStyled,
   HeaderContainerStyled,
@@ -9,15 +12,19 @@ import {
   FlexStyled,
 } from './AppBar.style';
 import Container from '@mui/material/Container';
+import UserNavigation from 'components/UserNavigation';
 
 export default function AppBar() {
   const [appBar, setAppBar] = useState(false);
+  const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
 
   useEffect(() => {
     changeBackground();
 
     window.addEventListener('scroll', changeBackground);
-  });
+
+    return () => window.removeEventListener('scroll', changeBackground);
+  }, []);
 
   const changeBackground = () => {
     if (window.scrollY >= 66) {
@@ -38,16 +45,16 @@ export default function AppBar() {
               Phonebook
             </Link>
           </FlexStyled>
-          <AuthNav />
+          {isLoggedIn ? (
+            <>
+              <MenuNavigation />
+              <UserNavigation />
+            </>
+          ) : (
+            <AuthNav />
+          )}
         </HeaderContainerStyled>
       </Container>
     </HeaderStyled>
   );
-}
-
-{
-  /* <Header>
-  <Navigation />
-  
-</Header>; */
 }
