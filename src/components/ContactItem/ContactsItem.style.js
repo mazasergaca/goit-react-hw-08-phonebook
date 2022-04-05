@@ -1,56 +1,48 @@
 import styled from 'styled-components';
 
-const ItemStyled = styled.tr`
+const ItemStyled = styled.li`
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  counter-increment: item;
+  background-color: #ffffff40;
+  color: #fff;
 
-  &:not(:last-child) {
-    margin-bottom: 18px;
-  }
-
-  &:before {
-    content: counter(item);
+  &:not(:last-child):after {
     position: absolute;
-    left: -1.3em;
-    top: 50%;
-    margin-top: -1.3em;
-    background-color: rgba(27, 41, 95, 0.5);
-    height: 2em;
-    width: 2em;
-    line-height: 2em;
-    border: 0.3em solid #fff;
-    text-align: center;
-    font-weight: bold;
-    border-radius: 2em;
-    transition: all 0.3s ease-out;
-  }
-  &:hover:before {
-    transform: scale(1.1);
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    content: '';
+    display: block;
+    width: 90%;
+    height: 2px;
+    background: linear-gradient(
+      160deg,
+      rgba(3, 0, 47, 1) 0%,
+      rgba(95, 27, 91, 1) 48%,
+      rgba(30, 54, 139, 1) 100%
+    );
   }
 `;
 
-const NameStyled = styled.td`
-  display: block;
-  padding: 14px 14px 14px 72px;
-  background-color: #ccc;
-  color: #000;
-  text-decoration: none;
-  transition: background-color 300ms ease-out;
+const PositionInListStyled = styled.span`
+  padding: 14px;
+  width: 10%;
+  text-align: center;
   font-size: 32px;
-
-  &:hover {
-    background-color: #e9e4e0;
-  }
 `;
-const NumberStyled = styled.td`
-  margin-right: 10px;
+
+const NameStyled = styled.span`
+  padding: 14px;
+  width: 40%;
+  text-align: center;
+  font-size: 32px;
+`;
+const NumberStyled = styled.span`
+  width: 40%;
   font-size: 30px;
-  background-color: #ccc;
+  text-align: center;
   padding: 14px;
 `;
 
-export { ItemStyled, NameStyled, NumberStyled };
+export { ItemStyled, NameStyled, NumberStyled, PositionInListStyled };

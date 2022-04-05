@@ -46,10 +46,10 @@ export default function AppBar() {
             </Link>
           </FlexStyled>
           {isLoggedIn ? (
-            <>
+            <FlexStyled>
               <MenuNavigation />
               <UserNavigation />
-            </>
+            </FlexStyled>
           ) : (
             <AuthNav />
           )}

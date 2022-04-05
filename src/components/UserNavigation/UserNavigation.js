@@ -59,6 +59,7 @@ export default function UserNavigation() {
         </IconButton>
       </Tooltip>
       <Menu
+        disableScrollLock={true}
         anchorEl={anchorEl}
         id="account-menu"
         open={open}

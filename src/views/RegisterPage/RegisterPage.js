@@ -19,7 +19,7 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [register, result] = useRegisterMutation();
+  const [register] = useRegisterMutation();
 
   function handleSubmit(e) {
     e.preventDefault();

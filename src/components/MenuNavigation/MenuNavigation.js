@@ -15,9 +15,6 @@ export default function MenuNavigation() {
           <NavLink to="contacts" className="nav-link primary-link">
             My contacts
           </NavLink>
-          <NavLink to="create-contact" className="nav-link primary-link">
-            Create new contact
-          </NavLink>
         </NavigationStyled>
       )}
     </>

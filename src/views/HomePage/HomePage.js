@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import 'css/nav-link.css';
 import { TextStyled, SectionStyled, ContainerStyled } from './HomePage.style';
 import Container from '@mui/material/Container';
-import heroImageLogin from 'image/hero.jpg';
 import heroImage from 'image/background-hero.jpg';
 
 export default function HomePage() {
@@ -27,10 +26,7 @@ export default function HomePage() {
       <Container style={{ height: '100%' }}>
         <ContainerStyled>
           <TextStyled>Create your new contact</TextStyled>
-          <Link
-            to="create-contact"
-            className="nav-link register-link hero-link"
-          >
+          <Link to="contacts" className="nav-link register-link hero-link">
             Go
           </Link>
         </ContainerStyled>

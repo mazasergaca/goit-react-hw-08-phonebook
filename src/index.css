@@ -7,8 +7,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* height: 1800px; */
-  padding: 0 !important;
-  overflow: hidden;
+ 
 }
 
 code {
@@ -37,6 +36,5 @@ h1, h2, p, ul {
 }
 
 html {
-  overflow-y: scroll  !important;
- 
+  overflow-y: scroll;
 }

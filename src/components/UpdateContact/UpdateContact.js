@@ -1,25 +1,26 @@
 import { useState } from 'react';
-import { useCreateContactMutation } from 'redux/contacts/contacts.api';
-import Section from 'components/Section';
-import Container from 'components/Container/Container';
+import { toast } from 'react-toastify';
+import { useUpdateContactMutation } from 'redux/contacts/contacts.api';
 import {
   FormStyled,
   LabelStyled,
   InputStyled,
-} from './CreateContactPage.style';
-import Button from '@mui/material/Button';
+  LabelContainerStyled,
+} from './UpdateContact.style';
+import Button from 'components/Button';
 
-export default function CreateContactPage() {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+export default function CreateContact({ setOpen, id, oldName, oldNumber }) {
+  const [name, setName] = useState(oldName);
+  const [number, setNumber] = useState(oldNumber);
 
-  const [createContact] = useCreateContactMutation();
+  const [updateContact] = useUpdateContactMutation();
 
   function handleSubmit(e) {
     e.preventDefault();
-    createContact({ name, number });
-    console.log({ name, number });
+    updateContact({ id, name, number });
     reset();
+    setOpen(false);
+    toast.success('Сontact updated!');
   }
   function reset() {
     setName('');
@@ -38,11 +39,11 @@ export default function CreateContactPage() {
     }
   }
   return (
-    <Section style={{ paddingTop: '400px' }}>
-      <Container>
-        <FormStyled onSubmit={handleSubmit}>
+    <>
+      <FormStyled onSubmit={handleSubmit}>
+        <LabelContainerStyled>
           <LabelStyled>
-            name
+            Name
             <InputStyled
               type="text"
               name="name"
@@ -51,11 +52,10 @@ export default function CreateContactPage() {
               pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               required
-              placeholder="Sylvester Block"
             />
           </LabelStyled>
           <LabelStyled>
-            phone
+            Phone
             <InputStyled
               type="tel"
               name="number"
@@ -64,14 +64,13 @@ export default function CreateContactPage() {
               pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required
-              placeholder="777-777-7777"
             />
           </LabelStyled>
-          <Button type="submit" variant="contained">
-            Go
-          </Button>
-        </FormStyled>
-      </Container>
-    </Section>
+        </LabelContainerStyled>
+        <Button type="submit" variant="contained">
+          Update
+        </Button>
+      </FormStyled>
+    </>
   );
 }

@@ -1,15 +1,15 @@
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import { useCreateContactMutation } from 'redux/contacts/contacts.api';
-import Section from 'components/Section';
-import Container from 'components/Container/Container';
 import {
   FormStyled,
   LabelStyled,
   InputStyled,
-} from './CreateContactPage.style';
-import Button from '@mui/material/Button';
+  LabelContainerStyled,
+} from './CreateContact.style';
+import Button from 'components/Button';
 
-export default function CreateContactPage() {
+export default function CreateContact({ setOpen }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -18,8 +18,9 @@ export default function CreateContactPage() {
   function handleSubmit(e) {
     e.preventDefault();
     createContact({ name, number });
-    console.log({ name, number });
     reset();
+    setOpen(false);
+    toast.success('Contact successfully added to your list!');
   }
   function reset() {
     setName('');
@@ -38,11 +39,11 @@ export default function CreateContactPage() {
     }
   }
   return (
-    <Section style={{ paddingTop: '400px' }}>
-      <Container>
-        <FormStyled onSubmit={handleSubmit}>
+    <>
+      <FormStyled onSubmit={handleSubmit}>
+        <LabelContainerStyled>
           <LabelStyled>
-            name
+            Name
             <InputStyled
               type="text"
               name="name"
@@ -55,7 +56,7 @@ export default function CreateContactPage() {
             />
           </LabelStyled>
           <LabelStyled>
-            phone
+            Phone
             <InputStyled
               type="tel"
               name="number"
@@ -67,11 +68,11 @@ export default function CreateContactPage() {
               placeholder="777-777-7777"
             />
           </LabelStyled>
-          <Button type="submit" variant="contained">
-            Go
-          </Button>
-        </FormStyled>
-      </Container>
-    </Section>
+        </LabelContainerStyled>
+        <Button type="submit" variant="contained">
+          Create
+        </Button>
+      </FormStyled>
+    </>
   );
 }

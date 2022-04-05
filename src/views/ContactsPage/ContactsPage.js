@@ -1,26 +1,39 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import contactsSelectors from 'redux/contacts/contacts-selectors';
-import authSelectors from 'redux/auth/auth-selectors';
-import { useGetContactsMutation } from 'redux/contacts/contacts.api';
+import { useGetContactsQuery } from 'redux/contacts/contacts.api';
 import ContactsList from 'components/ContactsList';
 import ContactItem from 'components/ContactItem';
 import Filter from 'components/Filter';
 import Section from 'components/Section';
 import { Container } from '@mui/material';
-import { ContainerListStyled } from './ContactsPage.style';
+import {
+  ContainerListStyled,
+  NoContactsStyled,
+  NoContactsImageStyled,
+  NoContactsText,
+} from './ContactsPage.style';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import BasicModal from 'components/Modal/Modal';
+import CreateContact from 'components/CreateContact';
+import ContactsBookImage from 'image/book-contacts.png';
 
 export default function ContactsPage() {
-  const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
-  const visibleContacts = useSelector(contactsSelectors.getVisibleTodos);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-  const [getAllContacts] = useGetContactsMutation();
+  const filter = useSelector(contactsSelectors.getFilter);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      getAllContacts();
-    }
-  }, [isLoggedIn, getAllContacts]);
+  const { data: contacts, isLoading } = useGetContactsQuery();
+
+  const getVisibleContacts = () => {
+    const normalizedFilter = filter?.toLowerCase();
+    return contacts?.filter(({ name }) =>
+      name.toLowerCase().includes(normalizedFilter)
+    );
+  };
 
   return (
     <Section
@@ -33,24 +46,47 @@ export default function ContactsPage() {
       <Container>
         <Filter />
         <ContainerListStyled>
-          {isLoggedIn && visibleContacts?.length > 0 ? (
-            <ContactsList>
-              {/* {visibleContacts.map(({ id, name, number }) => {
+          <ContactsList>
+            {contacts && !isLoading && getVisibleContacts()?.length > 0 ? (
+              getVisibleContacts().map(({ id, name, number }, index) => {
                 return (
-                  <ContactItem key={id} name={name} number={number} id={id} />
+                  <ContactItem
+                    key={id}
+                    name={name}
+                    number={number}
+                    id={id}
+                    position={index}
+                  />
                 );
-              })} */}
-              {visibleContacts.map(({ id, name, number }) => {
-                return (
-                  <ContactItem key={id} name={name} number={number} id={id} />
-                );
-              })}
-            </ContactsList>
-          ) : (
-            <h1>No contacts</h1>
-          )}
+              })
+            ) : (
+              <NoContactsStyled>
+                <NoContactsText>You have no contacts...</NoContactsText>
+                <NoContactsImageStyled
+                  src={ContactsBookImage}
+                  alt="contacts book"
+                />
+              </NoContactsStyled>
+            )}
+          </ContactsList>
         </ContainerListStyled>
+        <Fab
+          onClick={handleOpen}
+          color="secondary"
+          aria-label="add"
+          style={{
+            position: 'fixed',
+            top: '85%',
+            left: '85%',
+          }}
+        >
+          <AddIcon />
+        </Fab>
       </Container>
+
+      <BasicModal open={open} handleClose={handleClose}>
+        <CreateContact setOpen={setOpen} />
+      </BasicModal>
     </Section>
   );
 }
