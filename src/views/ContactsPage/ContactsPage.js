@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import authSelectors from 'redux/auth/auth-selectors';
 import contactsSelectors from 'redux/contacts/contacts-selectors';
 import { useGetContactsQuery } from 'redux/contacts/contacts.api';
 import ContactsList from 'components/ContactsList';
@@ -9,12 +10,15 @@ import Section from 'components/Section';
 import { Container } from '@mui/material';
 import {
   ContainerListStyled,
-  NoContactsStyled,
+  FlexStyled,
   NoContactsImageStyled,
   NoContactsText,
+  SectionStyled,
+  NoContactsStyled,
 } from './ContactsPage.style';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import Skeleton from '@mui/material/Skeleton';
 import BasicModal from 'components/Modal/Modal';
 import CreateContact from 'components/CreateContact';
 import ContactsBookImage from 'image/book-contacts.png';
@@ -25,9 +29,17 @@ export default function ContactsPage() {
   const handleClose = () => setOpen(false);
 
   const filter = useSelector(contactsSelectors.getFilter);
+  const isFetchingCurrentUser = useSelector(
+    authSelectors.getIsFetchingCurrentUser
+  );
 
-  const { data: contacts, isLoading } = useGetContactsQuery();
+  const { data: contacts, isLoading, refetch } = useGetContactsQuery();
 
+  // useEffect(() => {
+  //   refetch();
+  // }, []);
+
+  console.log(contacts);
   const getVisibleContacts = () => {
     const normalizedFilter = filter?.toLowerCase();
     return contacts?.filter(({ name }) =>
@@ -36,52 +48,75 @@ export default function ContactsPage() {
   };
 
   return (
-    <Section
-      style={{
-        backgroundImage: `linear-gradient(160deg, rgba(3,0,47,1) 0%, rgba(27,41,95,1) 48%, rgba(29,44,98,1) 100%)`,
-        minHeight: '100vh',
-        paddingTop: '120px',
-      }}
-    >
+    <Section style={{ ...SectionStyled }}>
       <Container>
-        <Filter />
-        <ContainerListStyled>
-          <ContactsList>
-            {contacts && !isLoading && getVisibleContacts()?.length > 0 ? (
-              getVisibleContacts().map(({ id, name, number }, index) => {
-                return (
-                  <ContactItem
-                    key={id}
-                    name={name}
-                    number={number}
-                    id={id}
-                    position={index}
-                  />
-                );
-              })
-            ) : (
-              <NoContactsStyled>
-                <NoContactsText>You have no contacts...</NoContactsText>
-                <NoContactsImageStyled
-                  src={ContactsBookImage}
-                  alt="contacts book"
-                />
-              </NoContactsStyled>
+        {!isFetchingCurrentUser ? (
+          <>
+            <Filter />
+            {contacts && (
+              <ContainerListStyled>
+                <ContactsList>
+                  {!isLoading && getVisibleContacts()?.length > 0 ? (
+                    getVisibleContacts().map(({ id, name, number }, index) => {
+                      return (
+                        <ContactItem
+                          key={id}
+                          name={name}
+                          number={number}
+                          id={id}
+                          position={index}
+                        />
+                      );
+                    })
+                  ) : (
+                    <NoContactsStyled>
+                      <NoContactsText>You have no contacts...</NoContactsText>
+                      <NoContactsImageStyled
+                        src={ContactsBookImage}
+                        alt="contacts book"
+                      />
+                    </NoContactsStyled>
+                  )}
+                </ContactsList>
+              </ContainerListStyled>
             )}
-          </ContactsList>
-        </ContainerListStyled>
-        <Fab
-          onClick={handleOpen}
-          color="secondary"
-          aria-label="add"
-          style={{
-            position: 'fixed',
-            top: '85%',
-            left: '85%',
-          }}
-        >
-          <AddIcon />
-        </Fab>
+            <Fab
+              onClick={handleOpen}
+              color="secondary"
+              aria-label="add"
+              style={{
+                position: 'fixed',
+                top: '85%',
+                left: '85%',
+              }}
+            >
+              <AddIcon />
+            </Fab>
+          </>
+        ) : (
+          <>
+            <FlexStyled>
+              <Skeleton
+                variant="rectangular"
+                width={250}
+                height={32}
+                sx={{ bgcolor: '#1b3a59' }}
+              />
+              <Skeleton
+                variant="rectangular"
+                width={220}
+                height={32}
+                sx={{ bgcolor: '#1b3a59', margin: '0 0 0 15px' }}
+              />
+            </FlexStyled>
+            <Skeleton
+              variant="rectangular"
+              width="100%"
+              height={500}
+              sx={{ bgcolor: '#1b3a59', margin: '0 0 0 15px' }}
+            />
+          </>
+        )}
       </Container>
 
       <BasicModal open={open} handleClose={handleClose}>

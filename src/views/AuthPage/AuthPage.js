@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLogInMutation } from 'redux/auth/auth-api';
+import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import Button from 'components/Button';
 import {
@@ -17,21 +18,27 @@ import {
 export default function AuthPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [logIn] = useLogInMutation();
+  const [logIn, { error }] = useLogInMutation();
 
   useEffect(() => {
     window.scroll(0, 0);
   }, []);
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    logIn({ email, password });
+    try {
+      await logIn({ email, password }).unwrap();
+    } catch (err) {
+      toast.error('Wrong email address or password!');
+    }
     reset();
   };
+
   function reset() {
     setEmail('');
     setPassword('');
   }
+
   function handleChange(e) {
     switch (e.target.name) {
       case 'email':

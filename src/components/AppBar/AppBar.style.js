@@ -5,7 +5,7 @@ const HeaderStyled = styled.header`
   width: 100%;
   border-bottom: 1px solid #ccc;
   transition: background-color 500ms linear;
-  z-index: 9999;
+  z-index: 2;
 `;
 
 const HeaderContainerStyled = styled.div`

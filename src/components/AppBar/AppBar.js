@@ -12,11 +12,15 @@ import {
   FlexStyled,
 } from './AppBar.style';
 import Container from '@mui/material/Container';
+import Skeleton from '@mui/material/Skeleton';
 import UserNavigation from 'components/UserNavigation';
 
 export default function AppBar() {
   const [appBar, setAppBar] = useState(false);
   const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
+  const isFetchingCurrentUser = useSelector(
+    authSelectors.getIsFetchingCurrentUser
+  );
 
   useEffect(() => {
     changeBackground();
@@ -39,19 +43,52 @@ export default function AppBar() {
     >
       <Container maxWidth="lg">
         <HeaderContainerStyled>
-          <FlexStyled>
-            <BsTelephone size="28px" color="#fff" />
-            <Link to="/" style={{ ...logoNameStyled }}>
-              Phonebook
-            </Link>
-          </FlexStyled>
-          {isLoggedIn ? (
-            <FlexStyled>
-              <MenuNavigation />
-              <UserNavigation />
-            </FlexStyled>
+          {!isFetchingCurrentUser ? (
+            <>
+              <FlexStyled>
+                <BsTelephone size="28px" color="#fff" />
+                <Link to="/" style={{ ...logoNameStyled }}>
+                  Phonebook
+                </Link>
+              </FlexStyled>
+              {isLoggedIn ? (
+                <FlexStyled>
+                  <MenuNavigation />
+                  <UserNavigation />
+                </FlexStyled>
+              ) : (
+                <AuthNav />
+              )}
+            </>
           ) : (
-            <AuthNav />
+            <>
+              <Skeleton
+                variant="h1"
+                width={225}
+                height={50}
+                sx={{ bgcolor: '#1b3a59' }}
+              />
+              <FlexStyled>
+                <Skeleton
+                  variant="rectangular"
+                  width={135}
+                  height={50}
+                  sx={{ bgcolor: '#1b3a59', margin: '0 25px 0 0' }}
+                />
+                <Skeleton
+                  variant="text"
+                  width={130}
+                  height={20}
+                  sx={{ bgcolor: '#1b3a59' }}
+                />
+                <Skeleton
+                  variant="circular"
+                  width={40}
+                  height={40}
+                  sx={{ bgcolor: '#1b3a59', margin: '0 0 0 16px' }}
+                />
+              </FlexStyled>
+            </>
           )}
         </HeaderContainerStyled>
       </Container>

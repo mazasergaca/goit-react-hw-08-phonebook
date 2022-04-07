@@ -5,55 +5,67 @@ import { Link } from 'react-router-dom';
 import 'css/nav-link.css';
 import { TextStyled, SectionStyled, ContainerStyled } from './HomePage.style';
 import Container from '@mui/material/Container';
-import heroImage from 'image/background-hero.jpg';
+import Skeleton from '@mui/material/Skeleton';
 
 export default function HomePage() {
   const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
+  const isFetchingCurrentUser = useSelector(
+    authSelectors.getIsFetchingCurrentUser
+  );
+
   useEffect(() => {
     window.scroll(0, 0);
   }, []);
-  return isLoggedIn ? (
-    <SectionStyled
-      style={{
-        backgroundImage: `linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0.2),
-    rgba(47, 48, 58, 0.4)
-  ),
-  url(${heroImage})`,
-      }}
-    >
+
+  return (
+    <SectionStyled>
       <Container style={{ height: '100%' }}>
         <ContainerStyled>
-          <TextStyled>Create your new contact</TextStyled>
-          <Link to="contacts" className="nav-link register-link hero-link">
-            Go
-          </Link>
-        </ContainerStyled>
-      </Container>
-    </SectionStyled>
-  ) : (
-    <SectionStyled
-      style={{
-        backgroundImage: `linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.2),
-      rgba(47, 48, 58, 0.4)
-    ),
-    url(${heroImage})`,
-      }}
-    >
-      <Container style={{ height: '100%' }}>
-        <ContainerStyled>
-          <TextStyled>
-            Do you need somewhere to store phone contacts?
-          </TextStyled>
-          <TextStyled style={{ animationDelay: '1300ms' }}>
-            Do it here
-          </TextStyled>
-          <Link to="register" className="nav-link register-link hero-link">
-            Sing Up
-          </Link>
+          {!isFetchingCurrentUser ? (
+            <>
+              {isLoggedIn ? (
+                <>
+                  <TextStyled>Create your new contact</TextStyled>
+                  <Link
+                    to="contacts"
+                    className="nav-link register-link hero-link"
+                  >
+                    Go
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <TextStyled>
+                    Do you need somewhere to store phone contacts?
+                  </TextStyled>
+                  <TextStyled style={{ animationDelay: '1300ms' }}>
+                    Do it here
+                  </TextStyled>
+                  <Link
+                    to="register"
+                    className="nav-link register-link hero-link"
+                  >
+                    Sing Up
+                  </Link>
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              <Skeleton
+                variant="h1"
+                width={600}
+                height={55}
+                sx={{ bgcolor: '#1b3a59', margin: '0 0 25px 0' }}
+              />
+              <Skeleton
+                variant="rectangular"
+                width={65}
+                height={40}
+                sx={{ bgcolor: '#1b3a59' }}
+              />
+            </>
+          )}
         </ContainerStyled>
       </Container>
     </SectionStyled>

@@ -3,7 +3,6 @@ import registerBackground from 'image/background-login.jpg';
 
 const SectionStyled = styled.div`
   position: relative;
-  width: 100vw;
   height: 100vh;
   border-top: 1px solid transparent;
   background-size: cover;
@@ -13,7 +12,6 @@ const SectionStyled = styled.div`
       rgba(47, 48, 58, 0.4)
     ),
     url(${registerBackground});
-  background-size: cover;
 `;
 const ContainerStyled = styled.div`
   position: absolute;

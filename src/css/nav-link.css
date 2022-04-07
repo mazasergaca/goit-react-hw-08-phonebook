@@ -7,9 +7,10 @@
 transition: background-color 250ms linear;
 }
 
-.primary-link {
-margin-right: 25px;
+.nav-link:not(:last-child) {
+    margin-right: 25px;
 }
+
 
 .primary-link:hover{
  background-color: rgba(211, 211, 211, 0.3);

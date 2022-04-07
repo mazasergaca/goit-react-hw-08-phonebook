@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { useCreateContactMutation } from 'redux/contacts/contacts.api';
+import {
+  useCreateContactMutation,
+  useGetContactsQuery,
+} from 'redux/contacts/contacts.api';
 import {
   FormStyled,
   LabelStyled,
@@ -14,13 +17,29 @@ export default function CreateContact({ setOpen }) {
   const [number, setNumber] = useState('');
 
   const [createContact] = useCreateContactMutation();
+  const { data: contacts } = useGetContactsQuery();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    createContact({ name, number });
-    reset();
-    setOpen(false);
-    toast.success('Contact successfully added to your list!');
+
+    let containName = false;
+    contacts.forEach(item => {
+      if (item.name === name) {
+        containName = true;
+      }
+    });
+    if (containName) {
+      return toast.info(`${name} is already in contacts.`);
+    }
+
+    try {
+      createContact({ name, number }).unwrap();
+      toast.success('Contact successfully added to your list!');
+      reset();
+      setOpen(false);
+    } catch {
+      toast.error('Error');
+    }
   }
   function reset() {
     setName('');

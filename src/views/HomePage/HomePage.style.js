@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import heroImage from 'image/background-hero.jpg';
 
 const animationHeroText = keyframes`
 0% {
@@ -17,8 +18,14 @@ const SectionStyled = styled.div`
   margin-right: auto;
   margin-left: auto;
   padding-top: 80px;
-  height: 600px;
+  height: 100vh;
   border-top: 1px solid transparent;
+  background-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.2),
+      rgba(47, 48, 58, 0.4)
+    ),
+    url(${heroImage});
   background-size: cover;
 `;
 

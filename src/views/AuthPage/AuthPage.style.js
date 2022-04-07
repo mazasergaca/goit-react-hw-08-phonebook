@@ -3,7 +3,6 @@ import loginBackground from 'image/background-login.jpg';
 
 const SectionStyled = styled.div`
   position: relative;
-  width: 100vw;
   height: 100vh;
   border-top: 1px solid transparent;
   background-size: cover;

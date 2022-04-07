@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { contactsApi } from 'redux/contacts/contacts.api';
+import { authApi } from 'redux/auth/auth-api';
 import { useSelector } from 'react-redux';
 import authSelectors from 'redux/auth/auth-selectors';
 import Avatar from '@mui/material/Avatar';
@@ -18,9 +21,12 @@ import { useLogOutMutation } from 'redux/auth/auth-api';
 export default function UserNavigation() {
   const name = useSelector(authSelectors.getUsername);
   const [logOut] = useLogOutMutation();
+  const dispatch = useDispatch();
 
   function handleClickClose() {
     logOut();
+    dispatch(contactsApi.util.resetApiState());
+    dispatch(authApi.util.resetApiState());
   }
 
   const [anchorEl, setAnchorEl] = useState(null);

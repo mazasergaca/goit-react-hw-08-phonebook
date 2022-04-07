@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  // items: [],
   filter: '',
 };
 
@@ -13,14 +12,6 @@ const contactsSlice = createSlice({
       state.filter = action.payload;
     },
   },
-  // extraReducers: builder => {
-  //   builder.addMatcher(
-  //     contactsApi.endpoints.getContacts.matchFulfilled,
-  //     (state, action) => {
-  //       state.items = action.payload;
-  //     }
-  //   );
-  // },
 });
 
 export const { changeFilter } = contactsSlice.actions;

@@ -7,11 +7,7 @@ export default function PublicRoute({
   restricted,
   redirectTo = '/',
 }) {
-  const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
+  const token = useSelector(authSelectors.getToken);
 
-  return isLoggedIn && restricted ? (
-    <Navigate replace to={redirectTo} />
-  ) : (
-    children
-  );
+  return token && restricted ? <Navigate replace to={redirectTo} /> : children;
 }

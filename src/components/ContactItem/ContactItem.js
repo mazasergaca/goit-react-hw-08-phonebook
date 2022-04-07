@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDeleteContactMutation } from 'redux/contacts/contacts.api';
+import { toast } from 'react-toastify';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {
@@ -19,6 +20,15 @@ export default function ContactItem({ name, number, id, position }) {
   const handleModalOpen = () => setOpen(true);
   const handleModalClose = () => setOpen(false);
 
+  async function onDeleteContact(contactId) {
+    try {
+      await deleteContact(contactId).unwrap();
+      toast.success('Contact deleted');
+    } catch {
+      toast.error('Error');
+    }
+  }
+
   return (
     <ItemStyled>
       <PositionInListStyled>{position + 1}</PositionInListStyled>
@@ -30,7 +40,7 @@ export default function ContactItem({ name, number, id, position }) {
         <Button onClick={handleModalOpen}>
           <EditIcon />
         </Button>
-        <Button onClick={() => deleteContact(id)}>
+        <Button onClick={() => onDeleteContact(id)}>
           <DeleteIcon />
         </Button>
       </ButtonGroup>

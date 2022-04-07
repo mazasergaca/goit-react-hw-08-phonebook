@@ -3,7 +3,7 @@ import authSelectors from 'redux/auth/auth-selectors';
 import { Navigate } from 'react-router-dom';
 
 export default function PrivateRoute({ children, redirectTo }) {
-  const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
+  const token = useSelector(authSelectors.getToken);
 
-  return isLoggedIn ? children : <Navigate to={'/12121'} />;
+  return token ? children : <Navigate to={redirectTo} />;
 }
