@@ -6,21 +6,35 @@ import {
   LabelStyled,
   InputStyled,
   LabelContainerStyled,
+  ButtonStyled,
+  ButtonCancelStyled,
+  FlexContainerStyled,
 } from './UpdateContact.style';
-import Button from 'components/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 
-export default function CreateContact({ setOpen, id, oldName, oldNumber }) {
+export default function CreateContact({
+  handleModalClose,
+  id,
+  oldName,
+  oldNumber,
+}) {
   const [name, setName] = useState(oldName);
   const [number, setNumber] = useState(oldNumber);
 
-  const [updateContact] = useUpdateContactMutation();
+  const [updateContact, { isLoading }] = useUpdateContactMutation();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    updateContact({ id, name, number });
-    reset();
-    setOpen(false);
-    toast.success('Сontact updated!');
+    if (name === oldName && number === oldNumber)
+      return toast.info('None of the parameters have changed');
+    try {
+      await updateContact({ id, name, number }).unwrap();
+      handleModalClose();
+      reset();
+      toast.success('Сontact updated!');
+    } catch {
+      toast.error('Error');
+    }
   }
   function reset() {
     setName('');
@@ -67,9 +81,22 @@ export default function CreateContact({ setOpen, id, oldName, oldNumber }) {
             />
           </LabelStyled>
         </LabelContainerStyled>
-        <Button type="submit" variant="contained">
-          Update
-        </Button>
+        <FlexContainerStyled>
+          <ButtonStyled type="submit" disabled={isLoading}>
+            {!isLoading ? (
+              'Update'
+            ) : (
+              <CircularProgress size="20px" sx={{ color: '#fff' }} />
+            )}
+          </ButtonStyled>
+          <ButtonCancelStyled
+            type="button"
+            onClick={handleModalClose}
+            disabled={isLoading}
+          >
+            Cancel
+          </ButtonCancelStyled>
+        </FlexContainerStyled>
       </FormStyled>
     </>
   );

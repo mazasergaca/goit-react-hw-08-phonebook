@@ -1,6 +1,10 @@
 import React from 'react';
 import { ButtonStyled } from './Buton.style';
 
-export default function Button({ children, style }) {
-  return <ButtonStyled style={{ ...style }}>{children}</ButtonStyled>;
+export default function Button({ children, style, onClick, props }) {
+  return (
+    <ButtonStyled style={{ ...style }} onClick={onClick} {...props}>
+      {children}
+    </ButtonStyled>
+  );
 }

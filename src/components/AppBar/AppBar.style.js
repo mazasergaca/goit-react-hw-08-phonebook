@@ -1,31 +1,40 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { adaptiveContainer } from 'styles/placeholders';
 
-const HeaderStyled = styled.header`
+export const HeaderStyled = styled.header`
   position: fixed;
   width: 100%;
-  border-bottom: 1px solid #ccc;
-  transition: background-color 500ms linear;
   z-index: 2;
+
+  border-bottom: 1px solid #ccc;
+  background-color: ${props => (props.bgc ? '#252525' : 'transparent')};
+
+  transition: background-color 500ms linear;
 `;
 
-const HeaderContainerStyled = styled.div`
+export const ContainerStyled = styled.div`
+  ${adaptiveContainer}
+
+  padding-top: 15px;
+  padding-bottom: 15px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 0;
 `;
 
-const logoNameStyled = {
-  marginLeft: '10px',
-  fontSize: '36px',
-  fontFamily: "'Quicksand', sans-serif",
-  color: '#fff',
-  textDecoration: 'none',
-};
+export const LogoStyled = styled(Link)`
+  margin-left: 10px;
 
-const FlexStyled = styled.div`
+  font-size: 36px;
+  font-family: 'Quicksand', sans-serif;
+  text-decoration: none;
+
+  color: #fff;
+`;
+
+export const FlexStyled = styled.div`
   display: flex;
   align-items: center;
 `;
-
-export { HeaderStyled, HeaderContainerStyled, logoNameStyled, FlexStyled };

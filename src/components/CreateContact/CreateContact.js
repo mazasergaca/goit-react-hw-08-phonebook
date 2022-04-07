@@ -9,14 +9,17 @@ import {
   LabelStyled,
   InputStyled,
   LabelContainerStyled,
+  ButtonStyled,
+  ButtonCancelStyled,
+  FlexContainerStyled,
 } from './CreateContact.style';
-import Button from 'components/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function CreateContact({ setOpen }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const [createContact] = useCreateContactMutation();
+  const [createContact, { isLoading }] = useCreateContactMutation();
   const { data: contacts } = useGetContactsQuery();
 
   async function handleSubmit(e) {
@@ -33,7 +36,7 @@ export default function CreateContact({ setOpen }) {
     }
 
     try {
-      createContact({ name, number }).unwrap();
+      await createContact({ name, number }).unwrap();
       toast.success('Contact successfully added to your list!');
       reset();
       setOpen(false);
@@ -88,9 +91,21 @@ export default function CreateContact({ setOpen }) {
             />
           </LabelStyled>
         </LabelContainerStyled>
-        <Button type="submit" variant="contained">
-          Create
-        </Button>
+        <FlexContainerStyled>
+          <ButtonStyled type="submit" disabled={isLoading}>
+            {!isLoading ? (
+              'Create'
+            ) : (
+              <CircularProgress size="20px" sx={{ color: '#fff' }} />
+            )}
+          </ButtonStyled>
+          <ButtonCancelStyled
+            onClick={() => setOpen(false)}
+            disabled={isLoading}
+          >
+            Cancel
+          </ButtonCancelStyled>
+        </FlexContainerStyled>
       </FormStyled>
     </>
   );

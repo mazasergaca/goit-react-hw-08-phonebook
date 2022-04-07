@@ -8,8 +8,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PrivateRoute from 'utils/PrivateRoute';
 import PublicRoute from 'utils/PublicRoute';
+import { Global } from 'styles/global';
 
-const HomePage = lazy(() => import('views/HomePage'));
+const HomePage = lazy(() => import('views/Home'));
 const AuthPage = lazy(() => import('views/AuthPage'));
 const RegisterPage = lazy(() => import('views/RegisterPage'));
 const ContactsPage = lazy(() => import('views/ContactsPage'));
@@ -29,6 +30,7 @@ export const App = () => {
   }, [token, fetchCurrentUser]);
   return (
     <>
+      <Global />
       {location.pathname !== '/login' && location.pathname !== '/register' && (
         <AppBar />
       )}

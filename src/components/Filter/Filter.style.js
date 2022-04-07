@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 const LabelStyled = styled.label`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  display: block;
+  width: 477px;
   margin-bottom: 10px;
+  margin-left: auto;
   font-size: 24px;
   color: #fff;
 `;

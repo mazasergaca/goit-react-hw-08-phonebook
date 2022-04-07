@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useLogInMutation } from 'redux/auth/auth-api';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
-import Button from 'components/Button';
 import {
   AuthFormStyled,
   AuthLabelStyled,
@@ -13,12 +12,16 @@ import {
   TitleStyled,
   FlexStyled,
   linkStyled,
+  ButtonStyled,
 } from './AuthPage.style';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useGetContactsQuery } from 'redux/contacts/contacts.api';
 
 export default function AuthPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [logIn, { error }] = useLogInMutation();
+  const [logIn, { isLoading }] = useLogInMutation();
+  // const { refetch } = useGetContactsQuery();
 
   useEffect(() => {
     window.scroll(0, 0);
@@ -31,6 +34,7 @@ export default function AuthPage() {
     } catch (err) {
       toast.error('Wrong email address or password!');
     }
+    // refetch();
     reset();
   };
 
@@ -70,6 +74,7 @@ export default function AuthPage() {
               value={email}
               placeholder="user@exaple.com"
               onChange={handleChange}
+              required
             />
           </AuthLabelStyled>
           <AuthLabelStyled>
@@ -79,11 +84,20 @@ export default function AuthPage() {
               name="password"
               value={password}
               onChange={handleChange}
+              required
             />
           </AuthLabelStyled>
-          <Button type="submit" style={{ marginLeft: 'auto' }}>
-            Log In
-          </Button>
+          <ButtonStyled
+            type="submit"
+            style={{ marginLeft: 'auto' }}
+            disabled={isLoading}
+          >
+            {!isLoading ? (
+              'Log In'
+            ) : (
+              <CircularProgress size="20px" sx={{ color: '#fff' }} />
+            )}
+          </ButtonStyled>
         </AuthFormStyled>
         <FlexStyled>
           <TextStyled style={{ fontWeight: '300' }}>No Account?</TextStyled>

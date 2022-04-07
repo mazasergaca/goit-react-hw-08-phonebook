@@ -17,5 +17,23 @@ const SpanStyled = styled.span`
   font-size: 32px;
   color: #fff;
 `;
+const NameStyled = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  width: 45%;
+  font-size: 32px;
+  color: #fff;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+`;
 
-export { ListStyled, SpanStyled, ItemStyled };
+const FlexContainerStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+`;
+
+export { ListStyled, SpanStyled, ItemStyled, FlexContainerStyled, NameStyled };

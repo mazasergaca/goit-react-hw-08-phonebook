@@ -1,110 +1,59 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { contactsApi } from 'redux/contacts/contacts.api';
-import { authApi } from 'redux/auth/auth-api';
 import { useSelector } from 'react-redux';
 import authSelectors from 'redux/auth/auth-selectors';
-import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
-import {
-  StyledBadge,
-  GreetingsStyled,
-  ContainerStyled,
-} from './UserNavigation.style';
-import Logout from '@mui/icons-material/Logout';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import { useLogOutMutation } from 'redux/auth/auth-api';
+import { Tooltip, Menu, MenuItem, IconButton } from '@mui/material';
+import { Logout } from '@mui/icons-material';
+import {
+  BadgeStyled,
+  TextStyled,
+  ContainerStyled,
+  AvatarStyled,
+  PaperProps,
+  LogoutStyled,
+} from './UserNavigation.style';
 
 export default function UserNavigation() {
   const name = useSelector(authSelectors.getUsername);
-  const [logOut] = useLogOutMutation();
-  const dispatch = useDispatch();
-
-  function handleClickClose() {
-    logOut();
-    dispatch(contactsApi.util.resetApiState());
-    dispatch(authApi.util.resetApiState());
-  }
-
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = event => {
+
+  const [logOut] = useLogOutMutation();
+
+  const handleOpen = event => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
   return (
     <ContainerStyled>
-      <GreetingsStyled>Welcome, {name}</GreetingsStyled>
+      <TextStyled>Welcome, {name}</TextStyled>
       <Tooltip title="Account settings">
-        <IconButton
-          onClick={handleClick}
-          size="small"
-          sx={{ ml: 2 }}
-          aria-controls={open ? 'account-menu' : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? 'true' : undefined}
-        >
-          <StyledBadge
+        <IconButton onClick={handleOpen} size="small" sx={{ ml: 2 }}>
+          <BadgeStyled
             overlap="circular"
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             variant="dot"
           >
-            <Avatar
-              sx={{ backgroundColor: '#ccc' }}
-              alt={name}
-              src="/broken-image.jpg"
-            >
-              {name[0]}
-            </Avatar>
-          </StyledBadge>
+            <AvatarStyled>{name[0]}</AvatarStyled>
+          </BadgeStyled>
         </IconButton>
       </Tooltip>
       <Menu
         disableScrollLock={true}
         anchorEl={anchorEl}
-        id="account-menu"
         open={open}
         onClose={handleClose}
         onClick={handleClose}
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            overflow: 'visible',
-            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-            mt: 1.5,
-            '& .MuiAvatar-root': {
-              width: 32,
-              height: 32,
-              ml: -0.5,
-              mr: 1,
-            },
-            '&:before': {
-              content: '""',
-              display: 'block',
-              position: 'absolute',
-              top: 0,
-              right: 14,
-              width: 10,
-              height: 10,
-              bgcolor: 'background.paper',
-              transform: 'translateY(-50%) rotate(45deg)',
-              zIndex: 0,
-            },
-          },
-        }}
+        PaperProps={{ ...PaperProps }}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClickClose}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
+        <MenuItem onClick={logOut}>
+          <Logout fontSize="small" />
+          <LogoutStyled>Logout</LogoutStyled>
         </MenuItem>
       </Menu>
     </ContainerStyled>

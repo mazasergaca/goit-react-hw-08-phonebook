@@ -78,6 +78,28 @@ const linkStyled = {
   fontWeight: '300',
 };
 
+const ButtonStyled = styled.button`
+  padding: 10px 20px;
+  width: 100px;
+  height: 42px;
+  font-family: Quicksand, sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  color: #fff;
+  background-color: #1976d2;
+  border: 1px solid #fff;
+  cursor: pointer;
+  transition: background-color 250ms linear;
+
+  &:hover {
+    background-color: #1667b8;
+  }
+
+  &:disabled {
+    background-color: #486179;
+  }
+`;
+
 export {
   AuthFormStyled,
   AuthLabelStyled,
@@ -88,4 +110,5 @@ export {
   TitleStyled,
   FlexStyled,
   linkStyled,
+  ButtonStyled,
 };

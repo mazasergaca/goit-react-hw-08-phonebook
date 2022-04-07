@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import authSelectors from 'redux/auth/auth-selectors';
 import contactsSelectors from 'redux/contacts/contacts-selectors';
@@ -25,26 +25,46 @@ import ContactsBookImage from 'image/book-contacts.png';
 
 export default function ContactsPage() {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [sort, setSort] = useState('standart');
 
-  const filter = useSelector(contactsSelectors.getFilter);
+  const { data: contacts, isLoading } = useGetContactsQuery();
+  const nameFilter = useSelector(contactsSelectors.getFilter);
   const isFetchingCurrentUser = useSelector(
     authSelectors.getIsFetchingCurrentUser
   );
 
-  const { data: contacts, isLoading, refetch } = useGetContactsQuery();
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-  // useEffect(() => {
-  //   refetch();
-  // }, []);
-
-  console.log(contacts);
   const getVisibleContacts = () => {
-    const normalizedFilter = filter?.toLowerCase();
+    const normalizedFilter = nameFilter?.toLowerCase();
     return contacts?.filter(({ name }) =>
       name.toLowerCase().includes(normalizedFilter)
     );
+  };
+
+  const sortByParameter = () => {
+    switch (sort) {
+      case 'standart':
+        setSort('A-Z');
+        break;
+      case 'A-Z':
+        setSort('Z-A');
+        break;
+      case 'Z-A':
+        setSort('standart');
+        break;
+      default:
+        return;
+    }
+  };
+
+  const getSortContacts = contacts => {
+    if (sort === 'standart') return contacts();
+    if (sort === 'A-Z')
+      return [...contacts()].sort((a, b) => a.name.localeCompare(b.name));
+    if (sort === 'Z-A')
+      return [...contacts()].sort((a, b) => b.name.localeCompare(a.name));
   };
 
   return (
@@ -55,19 +75,21 @@ export default function ContactsPage() {
             <Filter />
             {contacts && (
               <ContainerListStyled>
-                <ContactsList>
+                <ContactsList onClick={sortByParameter} sort={sort}>
                   {!isLoading && getVisibleContacts()?.length > 0 ? (
-                    getVisibleContacts().map(({ id, name, number }, index) => {
-                      return (
-                        <ContactItem
-                          key={id}
-                          name={name}
-                          number={number}
-                          id={id}
-                          position={index}
-                        />
-                      );
-                    })
+                    getSortContacts(getVisibleContacts).map(
+                      ({ id, name, number }, index) => {
+                        return (
+                          <ContactItem
+                            key={id}
+                            name={name}
+                            number={number}
+                            id={id}
+                            position={index}
+                          />
+                        );
+                      }
+                    )
                   ) : (
                     <NoContactsStyled>
                       <NoContactsText>You have no contacts...</NoContactsText>

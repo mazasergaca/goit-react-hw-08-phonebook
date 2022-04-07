@@ -1,8 +1,29 @@
-import Badge from '@mui/material/Badge';
-import s from 'styled-components';
-import { styled } from '@mui/material/styles';
+import styled from 'styled-components';
+import { Badge, Avatar } from '@mui/material';
+import * as mui from '@mui/material';
 
-const StyledBadge = styled(Badge)(({ theme }) => ({
+export const ContainerStyled = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const TextStyled = styled.span`
+  font-family: Quicksand, sans-serif;
+  font-weight: 300;
+
+  color: #fff;
+`;
+
+export const AvatarStyled = styled(Avatar)`
+  background-color: #ccc;
+`;
+
+export const LogoutStyled = styled.span`
+  margin-left: 5px;
+`;
+
+export const BadgeStyled = mui.styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
     backgroundColor: '#44b700',
     color: '#44b700',
@@ -30,13 +51,30 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
   },
 }));
-const ContainerStyled = s.div`
-display: flex;
-justify-content: center;
-align-items: center;`;
-const GreetingsStyled = s.span`
-font-family: Quicksand, sans-serif;
- font-weight: 300;
- color: #fff;`;
 
-export { StyledBadge, GreetingsStyled, ContainerStyled };
+export const PaperProps = {
+  elevation: 0,
+  sx: {
+    overflow: 'visible',
+    filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+    mt: 1.5,
+    '& .MuiAvatar-root': {
+      width: 32,
+      height: 32,
+      ml: -0.5,
+      mr: 1,
+    },
+    '&:before': {
+      content: '""',
+      display: 'block',
+      position: 'absolute',
+      top: 0,
+      right: 14,
+      width: 10,
+      height: 10,
+      bgcolor: 'background.paper',
+      transform: 'translateY(-50%) rotate(45deg)',
+      zIndex: 0,
+    },
+  },
+};

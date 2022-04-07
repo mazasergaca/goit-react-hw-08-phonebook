@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import { useRegisterMutation } from 'redux/auth/auth-api';
 import { Link } from 'react-router-dom';
 import {
@@ -11,21 +12,30 @@ import {
   TitleStyled,
   FlexStyled,
   linkStyled,
+  ButtonStyled,
 } from './RegisterPage.style';
-import Button from 'components/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useGetContactsQuery } from 'redux/contacts/contacts.api';
 
 export default function RegisterPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [register] = useRegisterMutation();
+  const [register, { isLoading }] = useRegisterMutation();
+  // const { refetch } = useGetContactsQuery();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    register({ name, email, password });
-    reset();
+    try {
+      await register({ name, email, password }).unwrap();
+      reset();
+    } catch {
+      toast.error('Error');
+    }
+    // refetch();
   }
+
   function reset() {
     setName('');
     setEmail('');
@@ -90,9 +100,13 @@ export default function RegisterPage() {
               required
             />
           </LabelStyled>
-          <Button type="submit" style={{ marginRight: 'auto' }}>
-            Create Account
-          </Button>
+          <ButtonStyled type="submit" disabled={isLoading}>
+            {!isLoading ? (
+              'Create contact'
+            ) : (
+              <CircularProgress size="20px" sx={{ color: '#fff' }} />
+            )}
+          </ButtonStyled>
         </FormStyled>
         <FlexStyled>
           <TextStyled style={{ fontWeight: '300' }}>Go back to</TextStyled>
