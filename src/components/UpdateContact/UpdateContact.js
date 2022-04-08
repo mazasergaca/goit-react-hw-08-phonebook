@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { useUpdateContactMutation } from 'redux/contacts/contacts.api';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useUpdateContactMutation } from 'redux/contacts/contacts-api';
 import {
   FormStyled,
   LabelStyled,
@@ -9,8 +10,7 @@ import {
   ButtonStyled,
   ButtonCancelStyled,
   FlexContainerStyled,
-} from './UpdateContact.style';
-import CircularProgress from '@mui/material/CircularProgress';
+} from './UpdateContactStyle';
 
 export default function CreateContact({
   handleModalClose,
@@ -23,10 +23,12 @@ export default function CreateContact({
 
   const [updateContact, { isLoading }] = useUpdateContactMutation();
 
-  async function handleSubmit(e) {
+  const handleSubmit = async e => {
     e.preventDefault();
+
     if (name === oldName && number === oldNumber)
       return toast.info('None of the parameters have changed');
+
     try {
       await updateContact({ id, name, number }).unwrap();
       handleModalClose();
@@ -35,12 +37,14 @@ export default function CreateContact({
     } catch {
       toast.error('Error');
     }
-  }
-  function reset() {
+  };
+
+  const reset = () => {
     setName('');
     setNumber('');
-  }
-  function handleChange(e) {
+  };
+
+  const handleChange = e => {
     switch (e.target.name) {
       case 'name':
         setName(e.target.value);
@@ -51,7 +55,8 @@ export default function CreateContact({
       default:
         return;
     }
-  }
+  };
+
   return (
     <>
       <FormStyled onSubmit={handleSubmit}>

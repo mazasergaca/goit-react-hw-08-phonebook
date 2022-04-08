@@ -1,36 +1,38 @@
 import { useState } from 'react';
-import { useDeleteContactMutation } from 'redux/contacts/contacts.api';
 import { toast } from 'react-toastify';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import CircularProgress from '@mui/material/CircularProgress';
+import { CircularProgress } from '@mui/material';
+import { useDeleteContactMutation } from 'redux/contacts/contacts-api';
+import BasicModal from 'components/Modal/Modal';
+import UpdateContact from 'components/UpdateContact';
 import {
   ItemStyled,
   NumberStyled,
   NameStyled,
-  PositionInListStyled,
+  PositionStyled,
   DeleteContactTextStyled,
   DeleteContactContainer,
   ButtonDeleteStyled,
   ButtonCancelStyled,
   FlexContainerStyled,
-} from './ContactsItem.style';
-import BasicModal from 'components/Modal/Modal';
-import UpdateContact from 'components/UpdateContact';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
+  ButtonStyled,
+  ButtonContainer,
+} from './ContactsItemStyle';
 
 export default function ContactItem({ name, number, id, position }) {
-  const [deleteContact, { isLoading }] = useDeleteContactMutation();
   const [open, setOpen] = useState(false);
   const [deleteModal, setDeleteOpen] = useState(false);
+
+  const [deleteContact, { isLoading }] = useDeleteContactMutation();
+
   const handleModalOpen = () => setOpen(true);
   const handleModalClose = () => {
     setDeleteOpen(false);
     setOpen(false);
   };
 
-  async function onDeleteContact(contactId) {
+  const onDeleteContact = async contactId => {
     try {
       await deleteContact(contactId).unwrap();
       setOpen(false);
@@ -38,28 +40,26 @@ export default function ContactItem({ name, number, id, position }) {
     } catch {
       toast.error('Error');
     }
-  }
+  };
 
   return (
     <ItemStyled>
-      <PositionInListStyled>{position + 1}</PositionInListStyled>
+      <PositionStyled>{position + 1}</PositionStyled>
       <NameStyled>{name}</NameStyled>
       <NumberStyled>{number}</NumberStyled>
-      <ButtonGroup
-        style={{ width: '10%', backgroundColor: '', borderRadius: '0' }}
-      >
-        <Button onClick={handleModalOpen}>
+      <ButtonContainer>
+        <ButtonStyled onClick={handleModalOpen}>
           <EditIcon />
-        </Button>
-        <Button
+        </ButtonStyled>
+        <ButtonStyled
           onClick={() => {
             setDeleteOpen(true);
             handleModalOpen();
           }}
         >
           <DeleteIcon />
-        </Button>
-      </ButtonGroup>
+        </ButtonStyled>
+      </ButtonContainer>
       <BasicModal open={open} handleClose={handleModalClose}>
         {deleteModal ? (
           <DeleteContactContainer>

@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import CircularProgress from '@mui/material/CircularProgress';
 import {
   useCreateContactMutation,
   useGetContactsQuery,
-} from 'redux/contacts/contacts.api';
+} from 'redux/contacts/contacts-api';
 import {
   FormStyled,
   LabelStyled,
@@ -12,8 +13,7 @@ import {
   ButtonStyled,
   ButtonCancelStyled,
   FlexContainerStyled,
-} from './CreateContact.style';
-import CircularProgress from '@mui/material/CircularProgress';
+} from './CreateContactStyles';
 
 export default function CreateContact({ setOpen }) {
   const [name, setName] = useState('');
@@ -22,18 +22,16 @@ export default function CreateContact({ setOpen }) {
   const [createContact, { isLoading }] = useCreateContactMutation();
   const { data: contacts } = useGetContactsQuery();
 
-  async function handleSubmit(e) {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     let containName = false;
+
     contacts.forEach(item => {
-      if (item.name === name) {
-        containName = true;
-      }
+      if (item.name === name) containName = true;
     });
-    if (containName) {
-      return toast.info(`${name} is already in contacts.`);
-    }
+
+    if (containName) return toast.info(`${name} is already in contacts.`);
 
     try {
       await createContact({ name, number }).unwrap();
@@ -43,12 +41,14 @@ export default function CreateContact({ setOpen }) {
     } catch {
       toast.error('Error');
     }
-  }
-  function reset() {
+  };
+
+  const reset = () => {
     setName('');
     setNumber('');
-  }
-  function handleChange(e) {
+  };
+
+  const handleChange = e => {
     switch (e.target.name) {
       case 'name':
         setName(e.target.value);
@@ -59,7 +59,7 @@ export default function CreateContact({ setOpen }) {
       default:
         return;
     }
-  }
+  };
   return (
     <>
       <FormStyled onSubmit={handleSubmit}>
@@ -100,6 +100,7 @@ export default function CreateContact({ setOpen }) {
             )}
           </ButtonStyled>
           <ButtonCancelStyled
+            type="button"
             onClick={() => setOpen(false)}
             disabled={isLoading}
           >

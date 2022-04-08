@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import { boxStyled } from './Modal.style';
+import { boxStyled } from './ModalStyle';
 
 export default function BasicModal({ handleClose, open, children }) {
   return (

@@ -3,17 +3,18 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import {
   ListStyled,
-  SpanStyled,
+  PhoneStyled,
   ItemStyled,
   FlexContainerStyled,
   NameStyled,
-} from './ContactsList.style';
+  NumberStyled,
+} from './ContactsListStyle';
 
 export default function ContactsList({ children, onClick, sort }) {
   return (
     <ListStyled>
       <ItemStyled>
-        <SpanStyled style={{ width: '10%' }}>№</SpanStyled>
+        <NumberStyled>№</NumberStyled>
         <NameStyled onClick={onClick}>
           Name
           <FlexContainerStyled>
@@ -25,7 +26,7 @@ export default function ContactsList({ children, onClick, sort }) {
             />
           </FlexContainerStyled>
         </NameStyled>
-        <SpanStyled>Phone number</SpanStyled>
+        <PhoneStyled>Phone number</PhoneStyled>
       </ItemStyled>
       {children}
     </ListStyled>

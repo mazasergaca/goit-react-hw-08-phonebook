@@ -4,14 +4,13 @@ import authSelectors from 'redux/auth/auth-selectors';
 import { BsTelephone } from 'react-icons/bs';
 import Skeleton from '@mui/material/Skeleton';
 import AuthNav from 'components/AuthNav';
-import UserNavigation from 'components/UserNavigation';
 import MenuNavigation from 'components/MenuNavigation';
 import {
   HeaderStyled,
   ContainerStyled,
   FlexStyled,
   LogoStyled,
-} from './AppBar.style';
+} from './AppBarStyles';
 
 export default function AppBar() {
   const [appBar, setAppBar] = useState(false);
@@ -43,7 +42,6 @@ export default function AppBar() {
             {isLoggedIn ? (
               <FlexStyled>
                 <MenuNavigation />
-                <UserNavigation />
               </FlexStyled>
             ) : (
               <AuthNav />

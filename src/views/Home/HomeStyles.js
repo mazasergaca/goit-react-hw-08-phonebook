@@ -38,6 +38,7 @@ export const LinkStyled = styled(Link)`
 
 export const SectionStyled = styled.div`
   width: 100%;
+  min-width: 320px;
   height: 100vh;
   margin-right: auto;
   margin-left: auto;
@@ -109,7 +110,7 @@ const textStyle = css`
 
 export const TitleStyled = styled.span`
   ${textStyle}
-
+  min-width: 300px;
   margin-bottom: 20px;
 
   @media screen and (min-width: 768px) {

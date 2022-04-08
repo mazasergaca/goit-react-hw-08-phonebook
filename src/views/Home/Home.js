@@ -11,7 +11,7 @@ import {
 } from './HomeStyles';
 
 export default function HomePage() {
-  const token = useSelector(authSelectors.getToken);
+  const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
   const isFetchingCurrentUser = useSelector(
     authSelectors.getIsFetchingCurrentUser
   );
@@ -25,7 +25,7 @@ export default function HomePage() {
       <ContainerStyled>
         {!isFetchingCurrentUser ? (
           <>
-            {token ? (
+            {isLoggedIn ? (
               <>
                 <TitleStyled>Create your new contact</TitleStyled>
                 <LinkStyled to="contacts">Go</LinkStyled>

@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import { authApi } from './auth-api';
-import { baseApi } from 'redux/base-api';
+import { authApi } from './auth-api';
 
 const initialState = {
   user: { name: null, email: null },
@@ -14,7 +13,7 @@ const authSlice = createSlice({
   initialState,
   extraReducers: builder => {
     builder.addMatcher(
-      baseApi.endpoints.logIn.matchFulfilled,
+      authApi.endpoints.logIn.matchFulfilled,
       (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
@@ -22,26 +21,26 @@ const authSlice = createSlice({
       }
     );
     builder.addMatcher(
-      baseApi.endpoints.register.matchFulfilled,
+      authApi.endpoints.register.matchFulfilled,
       (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isLoggedIn = true;
       }
     );
-    builder.addMatcher(baseApi.endpoints.logOut.matchFulfilled, state => {
+    builder.addMatcher(authApi.endpoints.logOut.matchFulfilled, state => {
       state.user = { name: null, email: null };
       state.token = null;
       state.isLoggedIn = false;
     });
     builder.addMatcher(
-      baseApi.endpoints.fetchCurrentUser.matchPending,
+      authApi.endpoints.fetchCurrentUser.matchPending,
       state => {
         state.isFetchingCurrentUser = true;
       }
     );
     builder.addMatcher(
-      baseApi.endpoints.fetchCurrentUser.matchFulfilled,
+      authApi.endpoints.fetchCurrentUser.matchFulfilled,
       (state, action) => {
         state.user = action.payload;
         state.isLoggedIn = true;
@@ -49,7 +48,7 @@ const authSlice = createSlice({
       }
     );
     builder.addMatcher(
-      baseApi.endpoints.fetchCurrentUser.matchRejected,
+      authApi.endpoints.fetchCurrentUser.matchRejected,
       state => {
         state.isFetchingCurrentUser = false;
       }

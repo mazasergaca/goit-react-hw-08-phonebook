@@ -1,19 +1,19 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import authSelectors from 'redux/auth/auth-selectors';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useFetchCurrentUserMutation } from 'redux/auth/auth-api';
-import AppBar from './AppBar';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PrivateRoute from 'utils/PrivateRoute';
 import PublicRoute from 'utils/PublicRoute';
 import { Global } from 'styles/global';
+import authSelectors from 'redux/auth/auth-selectors';
+import { useFetchCurrentUserMutation } from 'redux/auth/auth-api';
+import AppBar from './AppBar';
 
 const HomePage = lazy(() => import('views/Home'));
-const AuthPage = lazy(() => import('views/AuthPage'));
-const RegisterPage = lazy(() => import('views/RegisterPage'));
-const ContactsPage = lazy(() => import('views/ContactsPage'));
+const AuthPage = lazy(() => import('views/Login'));
+const RegisterPage = lazy(() => import('views/Register'));
+const ContactsPage = lazy(() => import('views/Contacts'));
 const NotFound = lazy(() => import('views/NotFound'));
 
 export const App = () => {
@@ -28,6 +28,7 @@ export const App = () => {
       fetchCurrentUser();
     }
   }, [token, fetchCurrentUser]);
+
   return (
     <>
       <Global />
