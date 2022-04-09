@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import {
@@ -32,3 +33,9 @@ export default function ContactsList({ children, onClick, sort }) {
     </ListStyled>
   );
 }
+
+ContactsList.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func.isRequired,
+  sort: PropTypes.string.isRequired,
+};

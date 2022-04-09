@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 import CircularProgress from '@mui/material/CircularProgress';
 import {
   useCreateContactMutation,
@@ -111,3 +112,7 @@ export default function CreateContact({ setOpen }) {
     </>
   );
 }
+
+CreateContact.propTypes = {
+  setOpen: PropTypes.func.isRequired,
+};

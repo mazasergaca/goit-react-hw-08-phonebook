@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useUpdateContactMutation } from 'redux/contacts/contacts-api';
 import {
@@ -12,7 +13,7 @@ import {
   FlexContainerStyled,
 } from './UpdateContactStyle';
 
-export default function CreateContact({
+export default function UpdateContact({
   handleModalClose,
   id,
   oldName,
@@ -106,3 +107,10 @@ export default function CreateContact({
     </>
   );
 }
+
+UpdateContact.propTypes = {
+  handleModalClose: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  oldName: PropTypes.string.isRequired,
+  oldNumber: PropTypes.string.isRequired,
+};

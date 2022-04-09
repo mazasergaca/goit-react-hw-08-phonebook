@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import PropTypes from 'prop-types';
 import { CircularProgress } from '@mui/material';
 import { useDeleteContactMutation } from 'redux/contacts/contacts-api';
 import BasicModal from 'components/Modal/Modal';
@@ -97,3 +98,10 @@ export default function ContactItem({ name, number, id, position }) {
     </ItemStyled>
   );
 }
+
+ContactItem.propTypes = {
+  name: PropTypes.string.isRequired,
+  number: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  position: PropTypes.number.isRequired,
+};
