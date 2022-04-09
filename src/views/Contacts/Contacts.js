@@ -67,11 +67,11 @@ export default function ContactsPage() {
   return (
     <SectionStyled>
       <ContainerStyled>
-        {!isFetchingCurrentUser ? (
+        {!isFetchingCurrentUser && contacts ? (
           <>
             <Filter />
-            {contacts && (
-              <ContactsList onClick={sortByParameter} sort={sort}>
+            <ContactsList onClick={sortByParameter} sort={sort}>
+              <>
                 {!isLoading && getVisibleContacts()?.length > 0 ? (
                   getSortContacts(getVisibleContacts).map(
                     ({ id, name, number }, index) => {
@@ -95,8 +95,8 @@ export default function ContactsPage() {
                     />
                   </NoContactsStyled>
                 )}
-              </ContactsList>
-            )}
+              </>
+            </ContactsList>
             <Fab
               onClick={handleOpen}
               color="secondary"

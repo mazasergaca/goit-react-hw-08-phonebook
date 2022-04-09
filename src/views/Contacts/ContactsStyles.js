@@ -39,6 +39,10 @@ export const NoContactsStyled = styled.div`
 `;
 export const NoContactsText = styled.span`
   margin-top: 45px;
-  font-size: 38px;
+  font-size: 26px;
   color: #fff;
+
+  @media screen and (min-width: 480px) {
+    font-size: 38px;
+  }
 `;

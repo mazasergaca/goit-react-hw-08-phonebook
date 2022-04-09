@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { baseApi } from 'redux/base-api';
+import { useSelector } from 'react-redux';
 import authSelectors from 'redux/auth/auth-selectors';
 import { useLogOutMutation } from 'redux/auth/auth-api';
 import { Tooltip, Menu, MenuItem, IconButton } from '@mui/material';
@@ -37,7 +36,6 @@ export default function MenuNavigation() {
   const open = Boolean(anchorEl);
 
   const [logOut] = useLogOutMutation();
-  const dispatch = useDispatch();
 
   const handleOpen = event => {
     setAnchorEl(event.currentTarget);
@@ -80,12 +78,7 @@ export default function MenuNavigation() {
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
-            <MenuItem
-              onClick={() => {
-                dispatch(baseApi.util.resetApiState());
-                logOut();
-              }}
-            >
+            <MenuItem onClick={logOut}>
               <Logout fontSize="small" />
               <LogoutStyled>Logout</LogoutStyled>
             </MenuItem>

@@ -5,6 +5,7 @@ const contactsApi = baseApi.injectEndpoints({
     getContacts: builder.query({
       query: () => `/contacts`,
       providesTags: ['Contacts'],
+      keepUnusedDataFor: 0,
     }),
     createContact: builder.mutation({
       query(contact) {

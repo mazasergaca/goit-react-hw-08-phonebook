@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import { authApi } from './auth-api';
 import { baseApi } from 'redux/base-api';
 
 const initialState = {

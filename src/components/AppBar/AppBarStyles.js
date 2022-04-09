@@ -8,7 +8,7 @@ export const HeaderStyled = styled.header`
   z-index: 2;
 
   border-bottom: 1px solid #ccc;
-  background-color: ${props => (props.bgc ? '#252525' : 'transparent')};
+  background-color: ${props => (props.bgc ? '#120b36' : 'transparent')};
 
   transition: background-color 500ms linear;
 `;
